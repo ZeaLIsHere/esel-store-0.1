@@ -32,10 +32,15 @@ const Navbar = () => {
 
         <div className="border-t border-border">
           <div className="flex items-center gap-6 h-12 overflow-x-auto scrollbar-hide">
-            {["All Games", "Mobile Legends", "Free Fire", "PUBG Mobile", "Genshin Impact", "Valorant", "Call of Duty"].map((category) => (
-              <button key={category} className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors whitespace-nowrap px-2">
-                {category}
-              </button>
+            {[
+              { label: "All Games", to: "/#popular-games" },
+              { label: "Mobile Legends", to: "/game/mobile-legends" },
+              { label: "Genshin Impact", to: "/game/genshin-impact" },
+              { label: "Steam Wallet", to: "/game/steam-wallet" },
+            ].map(({ label, to }) => (
+              <Link key={label} to={to} className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors whitespace-nowrap px-2">
+                {label}
+              </Link>
             ))}
           </div>
         </div>

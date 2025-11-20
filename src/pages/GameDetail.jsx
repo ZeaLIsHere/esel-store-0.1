@@ -90,7 +90,10 @@ const GameDetail = () => {
   const { gameId } = useParams();
   const { toast } = useToast();
   const game = gameId ? games[gameId] : null;
-  
+
+  const currencyLabel = gameId === "genshin-impact" ? "Genesis Crystals" : "Diamonds";
+  const currencyLabelLower = currencyLabel.toLowerCase();
+
   const [selectedPackage, setSelectedPackage] = useState(null);
   const [userId, setUserId] = useState("");
   const [serverId, setServerId] = useState("");
@@ -112,7 +115,7 @@ const GameDetail = () => {
     if (!selectedPackage) {
       toast({
         title: "Select a package",
-        description: "Please select a diamond package to continue.",
+        description: `Please select a ${currencyLabelLower} package to continue.`,
         variant: "destructive",
       });
       return;
@@ -128,8 +131,8 @@ const GameDetail = () => {
     }
 
     toast({
-      title: "Purchase Successful! 🎉",
-      description: `${selectedPackage.amount} diamonds will be credited to your account within 5 minutes.`,
+      title: "Purchase Successful! ",
+      description: `${selectedPackage.amount} ${currencyLabelLower} will be credited to your account within 5 minutes.`,
     });
 
     setSelectedPackage(null);
@@ -146,7 +149,7 @@ const GameDetail = () => {
           <img src={game.image} alt={game.name} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/20" />
         </div>
-        
+
         <div className="relative container mx-auto px-4 h-full flex flex-col justify-end pb-8">
           <Link to="/" className="mb-4">
             <Button variant="secondary" className="gap-2">
@@ -164,7 +167,7 @@ const GameDetail = () => {
           <Card className="p-6 bg-card border-border">
             <Zap className="h-10 w-10 text-primary mb-3" />
             <h3 className="text-lg font-bold text-foreground mb-2">Instant Delivery</h3>
-            <p className="text-sm text-muted-foreground">Receive your diamonds within 5 minutes, guaranteed.</p>
+            <p className="text-sm text-muted-foreground">Receive your {currencyLabelLower} within 5 minutes, guaranteed.</p>
           </Card>
           <Card className="p-6 bg-card border-border">
             <Shield className="h-10 w-10 text-primary mb-3" />
@@ -180,12 +183,12 @@ const GameDetail = () => {
 
         <div className="mb-12">
           <h2 className="text-3xl font-bold text-foreground mb-2">Select Package</h2>
-          <p className="text-muted-foreground mb-6">Choose the diamond package that suits your needs</p>
-          
+          <p className="text-muted-foreground mb-6">Choose the {currencyLabelLower} package that suits your needs</p>
+
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {pricingTiers.map((tier) => (
               <div key={tier.amount} onClick={() => setSelectedPackage(tier)} className="cursor-pointer">
-                <PricingCard amount={tier.amount} price={tier.price} bonus={tier.bonus} popular={tier.popular} onSelect={() => setSelectedPackage(tier)} />
+                <PricingCard amount={tier.amount} price={tier.price} bonus={tier.bonus} popular={tier.popular} currencyLabel={currencyLabel} onSelect={() => setSelectedPackage(tier)} />
               </div>
             ))}
           </div>
@@ -202,7 +205,7 @@ const GameDetail = () => {
                   <div>
                     <p className="text-sm text-muted-foreground">Selected Package</p>
                     <p className="text-xl font-bold text-foreground">
-                      {selectedPackage.amount} Diamonds
+                      {selectedPackage.amount} {currencyLabel}
                       {selectedPackage.bonus && (
                         <span className="text-sm text-accent ml-2">+{selectedPackage.bonus} Bonus</span>
                       )}

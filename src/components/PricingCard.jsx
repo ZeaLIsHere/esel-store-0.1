@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Check } from "lucide-react";
 
-const PricingCard = ({ amount, price, bonus, popular, onSelect }) => {
+const PricingCard = ({ amount, price, bonus, popular, onSelect, currencyLabel = "Diamonds" }) => {
   return (
     <Card
       className={`relative p-6 transition-all duration-300 hover:scale-105 ${
@@ -18,7 +18,7 @@ const PricingCard = ({ amount, price, bonus, popular, onSelect }) => {
       <div className="text-center space-y-4">
         <div>
           <div className="text-3xl font-bold text-foreground mb-1">{amount}</div>
-          <div className="text-sm text-muted-foreground">Diamonds</div>
+          <div className="text-sm text-muted-foreground">{currencyLabel}</div>
         </div>
 
         {bonus && (
